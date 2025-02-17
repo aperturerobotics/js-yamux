@@ -21,7 +21,7 @@ describe('muxer', () => {
   })
 
   it('test repeated close', async () => {
-    const client1 = testYamuxMuxer('libp2p:yamux:1', true)
+    const client1 = testYamuxMuxer('yamux:1', true)
     // inspect logs to ensure its only closed once
     await client1.close()
     await client1.close()
@@ -30,8 +30,8 @@ describe('muxer', () => {
 
   it('test client<->client', async () => {
     const pair = duplexPair<Uint8Array | Uint8ArrayList>()
-    const client1 = testYamuxMuxer('libp2p:yamux:1', true)
-    const client2 = testYamuxMuxer('libp2p:yamux:2', true)
+    const client1 = testYamuxMuxer('yamux:1', true)
+    const client2 = testYamuxMuxer('yamux:2', true)
     void pipe(pair[0], client1, pair[0])
     void pipe(pair[1], client2, pair[1])
     client1.newStream()
@@ -45,8 +45,8 @@ describe('muxer', () => {
 
   it('test server<->server', async () => {
     const pair = duplexPair<Uint8Array | Uint8ArrayList>()
-    const client1 = testYamuxMuxer('libp2p:yamux:1', false)
-    const client2 = testYamuxMuxer('libp2p:yamux:2', false)
+    const client1 = testYamuxMuxer('yamux:1', false)
+    const client2 = testYamuxMuxer('yamux:2', false)
     void pipe(pair[0], client1, pair[0])
     void pipe(pair[1], client2, pair[1])
     client1.newStream()

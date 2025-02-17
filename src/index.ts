@@ -1,26 +1,12 @@
 /**
  * @packageDocumentation
  *
- * This module is a JavaScript implementation of [Yamux from Hashicorp](https://github.com/hashicorp/yamux/blob/master/spec.md) designed to be used with [js-libp2p](https://github.com/libp2p/js-libp2p).
- *
- * @example Configure libp2p with Yamux
- *
- * ```typescript
- * import { createLibp2p } from 'libp2p'
- * import { yamux } from '@chainsafe/libp2p-yamux'
- *
- * const node = await createLibp2p({
- *   // ... other options
- *   streamMuxers: [
- *     yamux()
- *   ]
- * })
- * ```
+ * This module is a JavaScript implementation of [Yamux from Hashicorp](https://github.com/hashicorp/yamux/blob/master/spec.md) for JS.
  *
  * @example Using the low-level API
  *
  * ```js
- * import { yamux } from '@chainsafe/libp2p-yamux'
+ * import { yamux } from '@aptre/js-yamux'
  * import { pipe } from 'it-pipe'
  * import { duplexPair } from 'it-pair/duplex'
  * import all from 'it-all'
@@ -77,15 +63,15 @@
  * ```
  */
 
+import type { Logger } from './logger.js'
 import { Yamux } from './muxer.js'
 import type { YamuxMuxerInit } from './muxer.js'
-import type { ComponentLogger, StreamMuxerFactory } from '@libp2p/interface'
 
 export { GoAwayCode, type FrameHeader, type FrameType } from './frame.js'
 export type { YamuxMuxerInit }
 
 export interface YamuxMuxerComponents {
-  logger: ComponentLogger
+  log?: Logger
 }
 
 export function yamux (init: YamuxMuxerInit = {}): (components: YamuxMuxerComponents) => StreamMuxerFactory {

@@ -1,4 +1,3 @@
-import { InvalidParametersError, MuxerClosedError, TooManyOutboundProtocolStreamsError, serviceCapabilities, setMaxListeners } from '@libp2p/interface'
 import { getIterator } from 'get-iterator'
 import { pushable, type Pushable } from 'it-pushable'
 import { Uint8ArrayList } from 'uint8arraylist'
@@ -9,8 +8,8 @@ import { encodeHeader } from './encode.js'
 import { InvalidFrameError, NotMatchingPingError, UnrequestedPingError } from './errors.js'
 import { Flag, type FrameHeader, FrameType, GoAwayCode } from './frame.js'
 import { StreamState, YamuxStream } from './stream.js'
+import { type Logger } from './logger.js'
 import type { YamuxMuxerComponents } from './index.js'
-import type { AbortOptions, ComponentLogger, Logger, Stream, StreamMuxer, StreamMuxerFactory, StreamMuxerInit } from '@libp2p/interface'
 import type { Sink, Source } from 'it-stream-types'
 
 const YAMUX_PROTOCOL_ID = '/yamux/1.0.0'
@@ -29,11 +28,7 @@ export class Yamux implements StreamMuxerFactory {
     this._init = init
   }
 
-  readonly [Symbol.toStringTag] = '@chainsafe/libp2p-yamux'
-
-  readonly [serviceCapabilities]: string[] = [
-    '@libp2p/stream-multiplexing'
-  ]
+  readonly [Symbol.toStringTag] = '@aptre/js-yamux'
 
   createStreamMuxer (init?: YamuxMuxerInit): YamuxMuxer {
     return new YamuxMuxer(this._components, {
@@ -54,7 +49,6 @@ export class YamuxMuxer implements StreamMuxer {
 
   private readonly config: Config
   private readonly log?: Logger
-  private readonly logger: ComponentLogger
 
   /** Used to close the muxer from either the sink or source */
   private readonly closeController: AbortController
@@ -88,12 +82,10 @@ export class YamuxMuxer implements StreamMuxer {
   constructor (components: YamuxMuxerComponents, init: YamuxMuxerInit) {
     this.client = init.direction === 'outbound'
     this.config = { ...defaultConfig, ...init }
-    this.logger = components.logger
-    this.log = this.logger.forComponent('libp2p:yamux')
+    this.log = components.log
     verifyConfig(this.config)
 
     this.closeController = new AbortController()
-    setMaxListeners(Infinity, this.closeController.signal)
 
     this.onIncomingStream = init.onIncomingStream
     this.onStreamEnd = init.onStreamEnd
@@ -295,7 +287,6 @@ export class YamuxMuxer implements StreamMuxer {
 
     if (options.signal == null) {
       const signal = AbortSignal.timeout(CLOSE_TIMEOUT)
-      setMaxListeners(Infinity, signal)
 
       options = {
         ...options,
@@ -370,7 +361,7 @@ export class YamuxMuxer implements StreamMuxer {
         this.closeStream(id)
         this.onStreamEnd?.(stream)
       },
-      log: this.logger.forComponent(`libp2p:yamux:${direction}:${id}`),
+      log: this.log,
       config: this.config,
       getRTT: this.getRTT.bind(this)
     })

@@ -1,4 +1,3 @@
-import { prefixLogger } from '@libp2p/logger'
 import { duplexPair } from 'it-pair/duplex'
 import { pipe } from 'it-pipe'
 import { type Uint8ArrayList } from 'uint8arraylist'
@@ -34,9 +33,7 @@ export class TestYamux extends Yamux {
 }
 
 export function testYamuxMuxer (name: string, client: boolean, conf: YamuxMuxerInit = {}): YamuxMuxer {
-  return new YamuxMuxer({
-    logger: prefixLogger(name)
-  }, {
+  return new YamuxMuxer({}, {
     ...testConf,
     ...conf,
     direction: client ? 'outbound' : 'inbound'

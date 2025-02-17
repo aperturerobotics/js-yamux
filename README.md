@@ -1,9 +1,6 @@
-# @chainsafe/libp2p-yamux
+# @aptre/js-yamux
 
-[![codecov](https://img.shields.io/codecov/c/github/ChainSafe/js-libp2p-yamux.svg?style=flat-square)](https://codecov.io/gh/ChainSafe/js-libp2p-yamux)
-[![CI](https://img.shields.io/github/actions/workflow/status/ChainSafe/js-libp2p-yamux/js-test-and-release.yml?branch=master\&style=flat-square)](https://github.com/ChainSafe/js-libp2p-yamux/actions/workflows/js-test-and-release.yml?query=branch%3Amaster)
-
-> Yamux stream multiplexer for libp2p
+> Yamux stream multiplexer without libp2p deps
 
 # About
 
@@ -27,8 +24,7 @@ This module is a JavaScript implementation of [Yamux from Hashicorp](https://git
 ## Example - Configure libp2p with Yamux
 
 ```typescript
-import { createLibp2p } from 'libp2p'
-import { yamux } from '@chainsafe/libp2p-yamux'
+import { yamux } from '@aptre/js-yamux'
 
 const node = await createLibp2p({
   // ... other options
@@ -41,7 +37,7 @@ const node = await createLibp2p({
 ## Example - Using the low-level API
 
 ```js
-import { yamux } from '@chainsafe/libp2p-yamux'
+import { yamux } from '@aptre/js-yamux'
 import { pipe } from 'it-pipe'
 import { duplexPair } from 'it-pair/duplex'
 import all from 'it-all'
@@ -100,15 +96,7 @@ clientMuxer.close()
 # Install
 
 ```console
-$ npm i @chainsafe/libp2p-yamux
-```
-
-## Browser `<script>` tag
-
-Loading this module through a script tag will make its exports available as `ChainsafeLibp2pYamux` in the global namespace.
-
-```html
-<script src="https://unpkg.com/@chainsafe/libp2p-yamux/dist/index.min.js"></script>
+$ npm i @aptre/js-yamux
 ```
 
 # API Docs
