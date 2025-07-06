@@ -1,23 +1,21 @@
 {
   "name": "@aptre/yamux",
-  "version": "7.0.4",
-  "description": "Yamux stream multiplexer for libp2p",
+  "version": "1.0.0",
+  "description": "Yamux stream multiplexer",
   "license": "Apache-2.0 OR MIT",
-  "homepage": "https://github.com/ChainSafe/js-libp2p-yamux#readme",
+  "homepage": "https://github.com/aperturerobotics/js-yamux#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChainSafe/js-libp2p-yamux.git"
+    "url": "git+https://github.com/aperturerobotics/js-yamux.git"
   },
   "bugs": {
-    "url": "https://github.com/ChainSafe/js-libp2p-yamux/issues"
+    "url": "https://github.com/aperturerobotics/js-yamux/issues"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "keywords": [
-    "IPFS",
-    "libp2p",
     "multiplexer",
     "muxer",
     "stream"
@@ -169,8 +167,6 @@
     "release": "aegir release"
   },
   "dependencies": {
-    "@libp2p/interface": "^2.0.0",
-    "@libp2p/utils": "^6.0.0",
     "get-iterator": "^2.0.1",
     "it-foreach": "^2.0.6",
     "it-pushable": "^3.2.3",
@@ -179,9 +175,6 @@
     "uint8arraylist": "^2.4.8"
   },
   "devDependencies": {
-    "@dapplion/benchmark": "^1.0.0",
-    "@libp2p/interface-compliance-tests": "^6.4.12",
-    "@libp2p/mplex": "^11.0.0",
     "aegir": "^47.0.17",
     "it-drain": "^3.0.5",
     "it-pair": "^2.0.6",
