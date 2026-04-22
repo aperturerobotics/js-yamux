@@ -1,5 +1,5 @@
-import { InvalidParametersError } from '@libp2p/interface'
 import { INITIAL_STREAM_WINDOW, MAX_STREAM_WINDOW } from './constants.js'
+import { InvalidParametersError } from './libp2p.js'
 
 // TOOD use config items or delete them
 export interface Config {

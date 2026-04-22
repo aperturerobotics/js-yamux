@@ -1,12 +1,11 @@
-import { AbortError } from '@libp2p/interface'
 import { AbstractStream } from '@libp2p/utils/abstract-stream'
 import each from 'it-foreach'
 import { INITIAL_STREAM_WINDOW } from './constants.js'
 import { ReceiveWindowExceededError } from './errors.js'
 import { Flag, FrameType, HEADER_LENGTH } from './frame.js'
+import { AbortError, type AbortOptions } from './libp2p.js'
 import type { Config } from './config.js'
 import type { FrameHeader } from './frame.js'
-import type { AbortOptions } from '@libp2p/interface'
 import type { AbstractStreamInit } from '@libp2p/utils/abstract-stream'
 import type { Uint8ArrayList } from 'uint8arraylist'
 
@@ -131,7 +130,7 @@ export class YamuxStream extends AbstractStream {
   /**
    * Send a reset message to the remote muxer
    */
-  async sendReset (): Promise<void> {
+  sendReset (): void {
     this.sendFrame({
       type: FrameType.WindowUpdate,
       flag: Flag.RST,
@@ -271,6 +270,11 @@ export class YamuxStream extends AbstractStream {
    * potentially sends a window update enabling further writes to take place.
    */
   sendWindowUpdate (): void {
+    // only send window updates if the read status is ready
+    if (this.readStatus !== 'ready') {
+      return
+    }
+
     // determine the flags if any
     const flags = this.getSendFlags()
 

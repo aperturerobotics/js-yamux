@@ -1,4 +1,4 @@
-import { InvalidParametersError, MuxerClosedError, TooManyOutboundProtocolStreamsError, serviceCapabilities, setMaxListeners } from '@libp2p/interface'
+import { setMaxListeners } from 'main-event'
 import { getIterator } from 'get-iterator'
 import { pushable } from 'it-pushable'
 import { raceSignal } from 'race-signal'
@@ -9,11 +9,23 @@ import { Decoder } from './decode.js'
 import { encodeHeader } from './encode.js'
 import { InvalidFrameError, NotMatchingPingError, UnrequestedPingError } from './errors.js'
 import { Flag, FrameType, GoAwayCode } from './frame.js'
+import {
+  InvalidParametersError,
+  MuxerClosedError,
+  serviceCapabilities,
+  TooManyOutboundProtocolStreamsError,
+  type AbortOptions,
+  type ComponentLogger,
+  type Logger,
+  type Stream,
+  type StreamMuxer,
+  type StreamMuxerFactory,
+  type StreamMuxerInit,
+} from './libp2p.js'
 import { StreamState, YamuxStream } from './stream.js'
 import type { Config } from './config.js'
 import type { FrameHeader } from './frame.js'
 import type { YamuxMuxerComponents } from './index.js'
-import type { AbortOptions, ComponentLogger, Logger, Stream, StreamMuxer, StreamMuxerFactory, StreamMuxerInit } from '@libp2p/interface'
 import type { Pushable } from 'it-pushable'
 import type { Sink, Source } from 'it-stream-types'
 

@@ -78,10 +78,23 @@
  */
 
 import { Yamux } from './muxer.js'
+import type {
+  ComponentLogger,
+  StreamMuxerFactory,
+} from './libp2p.js'
 import type { YamuxMuxerInit } from './muxer.js'
-import type { ComponentLogger, StreamMuxerFactory } from '@libp2p/interface'
 
 export { GoAwayCode, type FrameHeader, type FrameType } from './frame.js'
+export type {
+  AbortOptions,
+  ComponentLogger,
+  Direction,
+  Logger,
+  Stream,
+  StreamMuxer,
+  StreamMuxerFactory,
+  StreamMuxerInit,
+} from './libp2p.js'
 export type { YamuxMuxerInit }
 
 export interface YamuxMuxerComponents {
