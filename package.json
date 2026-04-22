@@ -1,6 +1,6 @@
 {
   "name": "@aptre/yamux",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yamux stream multiplexer for libp2p",
   "license": "Apache-2.0 OR MIT",
   "homepage": "https://github.com/aperturerobotics/js-yamux#readme",
@@ -73,11 +73,11 @@
     "test:firefox-webworker": "aegir test -t webworker -- --browser firefox",
     "test:node": "aegir test -t node --cov",
     "test:electron-main": "aegir test -t electron-main",
-    "release": "bun run release:version && bun run release:commit",
-    "release:minor": "bun run release:version:minor && bun run release:commit",
-    "release:version": "node -e \"const fs=require('fs');const f='package.json';const p=JSON.parse(fs.readFileSync(f,'utf8'));const [a,b,c]=p.version.split('.').map(Number);p.version=[a,b,c+1].join('.');fs.writeFileSync(f, JSON.stringify(p, null, 2)+'\\n')\"",
-    "release:version:minor": "node -e \"const fs=require('fs');const f='package.json';const p=JSON.parse(fs.readFileSync(f,'utf8'));const [a,b]=p.version.split('.').map(Number);p.version=[a,b+1,0].join('.');fs.writeFileSync(f, JSON.stringify(p, null, 2)+'\\n')\"",
-    "release:commit": "git reset && git add package.json && git commit -m \"chore: release v$(node -p \\\"require('./package.json').version\\\")\" && git tag v$(node -p \"require('./package.json').version\")",
+    "release": "npm run release:version && npm run release:commit",
+    "release:minor": "npm run release:version:minor && npm run release:commit",
+    "release:version": "npm version patch -m \"release: v%s\" --no-git-tag-version",
+    "release:version:minor": "npm version minor -m \"release: v%s\" --no-git-tag-version",
+    "release:commit": "git reset && git add package.json && git commit -s -m \"release: v$(node -p \"require('./package.json').version\")\" && git tag v$(node -p \"require('./package.json').version\")",
     "release:publish": "git push && git push --tags"
   },
   "dependencies": {
