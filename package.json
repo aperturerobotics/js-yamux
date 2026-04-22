@@ -1,19 +1,19 @@
 {
   "name": "@aptre/yamux",
-  "version": "7.0.4",
+  "version": "1.0.0",
   "description": "Yamux stream multiplexer for libp2p",
   "license": "Apache-2.0 OR MIT",
-  "homepage": "https://github.com/ChainSafe/js-libp2p-yamux#readme",
+  "homepage": "https://github.com/aperturerobotics/js-yamux#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChainSafe/js-libp2p-yamux.git"
+    "url": "git+https://github.com/aperturerobotics/js-yamux.git"
   },
   "bugs": {
-    "url": "https://github.com/ChainSafe/js-libp2p-yamux/issues"
+    "url": "https://github.com/aperturerobotics/js-yamux/issues"
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true
+    "provenance": false
   },
   "keywords": [
     "IPFS",
@@ -60,99 +60,6 @@
       "import": "./dist/src/stream.js"
     }
   },
-  "release": {
-    "branches": [
-      "master"
-    ],
-    "plugins": [
-      [
-        "@semantic-release/commit-analyzer",
-        {
-          "preset": "conventionalcommits",
-          "releaseRules": [
-            {
-              "breaking": true,
-              "release": "major"
-            },
-            {
-              "revert": true,
-              "release": "patch"
-            },
-            {
-              "type": "feat",
-              "release": "minor"
-            },
-            {
-              "type": "fix",
-              "release": "patch"
-            },
-            {
-              "type": "docs",
-              "release": "patch"
-            },
-            {
-              "type": "test",
-              "release": "patch"
-            },
-            {
-              "type": "deps",
-              "release": "patch"
-            },
-            {
-              "scope": "no-release",
-              "release": false
-            }
-          ]
-        }
-      ],
-      [
-        "@semantic-release/release-notes-generator",
-        {
-          "preset": "conventionalcommits",
-          "presetConfig": {
-            "types": [
-              {
-                "type": "feat",
-                "section": "Features"
-              },
-              {
-                "type": "fix",
-                "section": "Bug Fixes"
-              },
-              {
-                "type": "chore",
-                "section": "Trivial Changes"
-              },
-              {
-                "type": "docs",
-                "section": "Documentation"
-              },
-              {
-                "type": "deps",
-                "section": "Dependencies"
-              },
-              {
-                "type": "test",
-                "section": "Tests"
-              }
-            ]
-          }
-        }
-      ],
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      "@semantic-release/github",
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "CHANGELOG.md",
-            "package.json"
-          ]
-        }
-      ]
-    ]
-  },
   "scripts": {
     "clean": "aegir clean",
     "lint": "aegir lint",
@@ -166,7 +73,12 @@
     "test:firefox-webworker": "aegir test -t webworker -- --browser firefox",
     "test:node": "aegir test -t node --cov",
     "test:electron-main": "aegir test -t electron-main",
-    "release": "aegir release"
+    "release": "bun run release:version && bun run release:commit",
+    "release:minor": "bun run release:version:minor && bun run release:commit",
+    "release:version": "node -e \"const fs=require('fs');const f='package.json';const p=JSON.parse(fs.readFileSync(f,'utf8'));const [a,b,c]=p.version.split('.').map(Number);p.version=[a,b,c+1].join('.');fs.writeFileSync(f, JSON.stringify(p, null, 2)+'\\n')\"",
+    "release:version:minor": "node -e \"const fs=require('fs');const f='package.json';const p=JSON.parse(fs.readFileSync(f,'utf8'));const [a,b]=p.version.split('.').map(Number);p.version=[a,b+1,0].join('.');fs.writeFileSync(f, JSON.stringify(p, null, 2)+'\\n')\"",
+    "release:commit": "git reset && git add package.json && git commit -m \"chore: release v$(node -p \\\"require('./package.json').version\\\")\" && git tag v$(node -p \"require('./package.json').version\")",
+    "release:publish": "git push && git push --tags"
   },
   "dependencies": {
     "@libp2p/utils": "^6.0.0",

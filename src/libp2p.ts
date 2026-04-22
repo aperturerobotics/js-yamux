@@ -66,7 +66,7 @@ export const serviceCapabilities = Symbol.for('@libp2p/service-capabilities')
 export class AbortError extends Error {
   static name = 'AbortError'
 
-  constructor(message: string = 'The operation was aborted') {
+  constructor (message: string = 'The operation was aborted') {
     super(message)
     this.name = 'AbortError'
   }
@@ -75,7 +75,7 @@ export class AbortError extends Error {
 export class InvalidParametersError extends Error {
   static name = 'InvalidParametersError'
 
-  constructor(message = 'Invalid parameters') {
+  constructor (message = 'Invalid parameters') {
     super(message)
     this.name = 'InvalidParametersError'
   }
@@ -84,7 +84,7 @@ export class InvalidParametersError extends Error {
 export class MuxerClosedError extends Error {
   static name = 'MuxerClosedError'
 
-  constructor(message = 'The muxer is closed') {
+  constructor (message = 'The muxer is closed') {
     super(message)
     this.name = 'MuxerClosedError'
   }
@@ -93,7 +93,7 @@ export class MuxerClosedError extends Error {
 export class TooManyOutboundProtocolStreamsError extends Error {
   static name = 'TooManyOutboundProtocolStreamsError'
 
-  constructor(message = 'Too many outbound protocol streams') {
+  constructor (message = 'Too many outbound protocol streams') {
     super(message)
     this.name = 'TooManyOutboundProtocolStreamsError'
   }

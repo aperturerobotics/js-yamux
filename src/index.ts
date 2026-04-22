@@ -80,7 +80,7 @@
 import { Yamux } from './muxer.js'
 import type {
   ComponentLogger,
-  StreamMuxerFactory,
+  StreamMuxerFactory
 } from './libp2p.js'
 import type { YamuxMuxerInit } from './muxer.js'
 
@@ -93,7 +93,7 @@ export type {
   Stream,
   StreamMuxer,
   StreamMuxerFactory,
-  StreamMuxerInit,
+  StreamMuxerInit
 } from './libp2p.js'
 export type { YamuxMuxerInit }
 
